@@ -76,18 +76,18 @@ sub TestProgram {
 	if (system ($compile_command) == 0) {
 	    $compile_succeeded = 1;
 	    last;
-	} else {
-	    if ($EXT eq "java") {
-		`javac $TMP_DIR/$basename.$EXT 2>&1` =~ /class (.*) is public/;
-		last if ($basename eq $1);
+	} elsif ($EXT eq "java") {
+	    if (`javac $TMP_DIR/$basename.$EXT 2>&1` =~ /class (.*) is public/) {
 		`mv $TMP_DIR/$basename.$EXT $TMP_DIR/$1.$EXT`;
 		print STDERR "--== Detected new public class name: $1 ==--\n";
 		$basename = $1;
 		$compile_command = "javac $TMP_DIR/$basename.$EXT 2> /dev/null";
-		$run_command = "java -classpath $TMP_DIR $basename < $JUDGE_IN > $TMP_DIR/$basename.out";
+		$run_command = "java -Xss256m -classpath $TMP_DIR $basename < $JUDGE_IN > $TMP_DIR/$basename.out";
 	    } else {
-		last;
+		last; # other java compile errors
 	    }
+	} else {
+	  last;
 	}
     }
     if (!$compile_succeeded) {
@@ -320,11 +320,11 @@ sub main {
 	$response = TestProgram ("gcc -lm -O2 -o $TMP_DIR/$PROBLEM $TMP_DIR/$PROBLEM.$EXT 2> /dev/null",
 				 "$TMP_DIR/$PROBLEM < $JUDGE_IN > $TMP_DIR/$PROBLEM.out");
     } elsif ($EXT eq "cc") {
-	$response = TestProgram ("g++ -lm -O2 -o $TMP_DIR/$PROBLEM $TMP_DIR/$PROBLEM.$EXT 2> /dev/null",
+	$response = TestProgram ("g++ -lm -O2 -std=c++11 -o $TMP_DIR/$PROBLEM $TMP_DIR/$PROBLEM.$EXT 2> /dev/null",
 				 "$TMP_DIR/$PROBLEM < $JUDGE_IN > $TMP_DIR/$PROBLEM.out");
     } elsif ($EXT eq "java") {
 	$response = TestProgram ("javac $TMP_DIR/$PROBLEM.$EXT 2> /dev/null",
-				 "java -classpath $TMP_DIR $PROBLEM < $JUDGE_IN > $TMP_DIR/$PROBLEM.out");
+				 "java -Xss256m -classpath $TMP_DIR $PROBLEM < $JUDGE_IN > $TMP_DIR/$PROBLEM.out");
     }
 
     if ($response eq "AC") {
