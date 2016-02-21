@@ -138,6 +138,7 @@ Doing so may cause post data to be resent. Instead, please use the button below.
    <th width="60">Time</th>
    <th>Team</th>
    <th>Problem</th>
+   <th>Points</th>
    <th width="80">Language</th>
    <th width="80">File</th>
    <th width="160">Verdict</th>
@@ -151,6 +152,7 @@ Doing so may cause post data to be resent. Instead, please use the button below.
       $xkey = $pkey . "x";
       $plink = $contest->jproblemlink($run->problem);
 //      $flink = "<a href=\"../$g_submitpath$run->team/$run->file\">$run->file</a>";
+      $score = $contest->pscores[$run->problem];
       $fname = $run->problem . $g_extension[$run->language];
       $flink = "<a href=\"jfetch.php?file=" . 
                urlencode("../$g_submitpath$run->team/$run->file") . 
@@ -164,6 +166,7 @@ Doing so may cause post data to be resent. Instead, please use the button below.
       print "   <td align=\"center\">$run->time</td>\n";
       print "   <td>$run->team</td>\n";
       print "   <td>$plink</td>\n";
+      print "   <td>$score</td>\n";
       print "   <td align=\"center\">$run->language</td>\n";
       print "   <td align=\"center\">$flink</td>\n";
 

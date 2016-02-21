@@ -24,9 +24,10 @@
             if ($_POST["problem".$i])
             {
                $name = stripcslashes($_POST["problem".$i]);
+               $score = $_POST["problem".$i."-s"];
                $url = $_POST["problem".$i."-u"];
                $filename = $_FILES["problem".$i."-f"]["name"];
-               fputs($fp, sprintf("%-30s %s\n", $name . ";", $url));
+               fputs($fp, sprintf("%-30s;%s;%s\n", $name, $score, $url));
                
                // if a 
                if ($url && $filename)
@@ -188,7 +189,7 @@ END;
          }
          print "         </select>\n";
          print "         <select name=\"cdyear\">\n";
-         for ($i = 2010; $i <= 2013; $i++) {
+         for ($i = 2016; $i <= 2020; $i++) {
             $sel = ($i == $cdyear) ? "selected=\"selected\"" : "";         
             print "            <option value=\"$i\" $sel>$i</option>\n";
          }
@@ -253,6 +254,7 @@ END;
 <tr bgcolor="#EEEEEE">
    <th></th>
    <th>Problem Name</th>
+   <th>Score</th>
    <th>URL</th>
    <th>File Upload</th>
 </tr>
@@ -262,7 +264,8 @@ END;
    {
       $line = explode(";", $problems[$i-1]);
       $name = htmlspecialchars(trim($line[0]));
-      $url  = trim($line[1]);
+      $score = trim($line[1]);
+      $url  = trim($line[2]);
    
       if ($i % 2)    print "<tr bgcolor=\"#EDF3FE\">\n";
       else           print "<tr>\n";
@@ -280,6 +283,7 @@ END;
       else           print "   <td></td>\n";
       
       print "   <td align=\"center\"><input type=\"text\" name=\"problem$i\" size=\"30\" value=\"$name\" /></td>\n";
+      print "   <td align=\"center\"><input type=\"text\" name=\"problem$i-s\" size=\"3\" value=\"$score\" /></td>\n";
       print "   <td align=\"center\"><input type=\"text\" name=\"problem$i-u\" size=\"12\" value=\"$url\" /></td>\n";
       print "   <td><input type=\"file\" name=\"problem$i-f\" /></td>\n";
       print "</tr>\n";

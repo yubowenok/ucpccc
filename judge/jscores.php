@@ -65,7 +65,7 @@
                if (in_array($team, $g_official))
                   $teamname = "<b><i>".$teamname."</i></b>";
                
-               $scores[$team] = new TeamScore($teamname, $team);
+               $scores[$team] = new TeamScore($teamname, $team, $contest);
             }
             
             $scores[$team]->report($prob, $time, $verdict);

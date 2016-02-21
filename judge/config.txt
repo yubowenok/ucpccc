@@ -1,9 +1,9 @@
 Ultra Cool Programming Contest
 judge@example.com
-01 January 2013
-12:00 + 05:00
+21 February 2016
+13:00 + 05:00
 60;A;on
 Problem Set Title
-Alpha;		problemA.pdf
-Beta;		problemB.pdf
-Gamma;		problemC.pdf
+Alpha                         ;50;problemA.pdf
+Beta                          ;20;problemB.pdf
+Gamma                         ;30;problemC.pdf
