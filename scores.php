@@ -139,7 +139,8 @@
                print "<td align=\"center\">$stat</td>";
             }
             print "<td align=\"center\">$ts->total</td>";
-            print "<td align=\"center\">$ts->penalty</td>";
+            $gcj_penalty = $ts->gcj_penalty();
+            print "<td align=\"center\">$gcj_penalty</td>";
             print "</tr>\n";      
          }
       }

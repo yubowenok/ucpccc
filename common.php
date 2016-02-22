@@ -290,6 +290,17 @@
          $this->id = $id;
          $this->contest = $contest;
       }
+
+      // Compute the GCJ score, after all problems have been reported.
+      function gcj_penalty() {
+        $solved_booboos = 0;
+        foreach ($this->contest->pletters as $letter) {
+           if (in_array($letter, $this->solved)) {
+              $solved_booboos += $this->booboo[$letter];
+           }
+        }
+        return max($this->attime) + $solved_booboos * 4;
+      }
       
       // report the result of a judgement to this team's record
       // assumes all reports are done in chronological order
@@ -326,7 +337,7 @@
          {
             $stat = $this->attime[$problem];
             if (array_key_exists($problem, $this->booboo))
-               $stat = $stat . "+" . ($this->booboo[$problem] * 20);
+               $stat = $stat . "+" . ($this->booboo[$problem] * 4);
          }
          else if (array_key_exists($problem, $this->booboo))
          {
