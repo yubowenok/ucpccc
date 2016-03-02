@@ -84,7 +84,7 @@
 
             if (move_uploaded_file($tempfile, $teamfile))
             {
-               chmod($teamfile, 0660);
+               chmod($teamfile, 0666);
                
                // remember the team's preferred language
                $_SESSION["language"] = $language;
