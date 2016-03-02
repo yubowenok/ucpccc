@@ -124,6 +124,7 @@
       var $showtitles;
       
       var $pletters = array();
+      var $pscores = array();
       var $pnames = array();
       var $purls = array();
       
@@ -168,11 +169,13 @@
                $line = explode(";", $line);
                $ptitle = ($this->showtitles || $this->tnow >= $this->tstart) ? 
                          htmlspecialchars(trim($line[0])) : "?????";
+               $pscore = intval(trim($line[1]));
                $name = "$letter - " . $ptitle;
-               $url  = $problempath . trim($line[1]);
+               $url  = $problempath . trim($line[2]);
                
                $this->pletters[] = $letter;
                $this->pnames[$letter] = $name;
+               $this->pscores[$letter] = $pscore;
                $this->purls[$letter] = $url;
                
                ++$letter;
@@ -202,8 +205,9 @@
       {
          $name = $this->pnames[$letter];
          $url = $this->purls[$letter];
+         $score = $this->pscores[$letter];
          if ($this->tnow >= $this->tstart)
-            return "<a href=\"$url\">Problem $name</a>";
+            return "<a href=\"$url\">Problem $name</a> <small>($score pts)</small>";
          else
             return "Problem " . $name;
       }
@@ -211,9 +215,10 @@
       function problemshortlink($letter)
       {
          $url = $this->purls[$letter];
-         if ($this->tnow >= $this->tstart)
-            return "<a href=\"$url\">$letter</a>";
-         else
+         if ($this->tnow >= $this->tstart) {
+            $score = $this->pscores[$letter];
+            return "<a href=\"$url\" title=\"$score pts\">$letter</a>";
+         } else
             return $letter;
       }
 
@@ -230,9 +235,10 @@
       function jproblemshortlink($letter)
       {
          $url = $this->purls[$letter];
-         if ($this->tnow >= $this->tstart)
-            return "<a href=\"../$url\">$letter</a>";
-         else
+         if ($this->tnow >= $this->tstart) {
+            $score = $this->pscores[$letter];
+            return "<a href=\"../$url\" title=\"$score pts\">$letter</a>";
+         } else
             return $letter;
       }
    }
@@ -276,11 +282,24 @@
       var $booboo = array();
       var $total = 0;
       var $penalty = 0;
+      var $contest;
       
-      function TeamScore($team, $id = "")
+      function TeamScore($team, $id = "", $contest)
       {
          $this->name = $team;
          $this->id = $id;
+         $this->contest = $contest;
+      }
+
+      // Compute the GCJ score, after all problems have been reported.
+      function gcj_penalty() {
+        $solved_booboos = 0;
+        foreach ($this->contest->pletters as $letter) {
+           if (in_array($letter, $this->solved)) {
+              $solved_booboos += $this->booboo[$letter];
+           }
+        }
+        return max($this->attime) + $solved_booboos * 4;
       }
       
       // report the result of a judgement to this team's record
@@ -300,7 +319,7 @@
             case "A":
                $this->solved[] = $problem;
                $this->attime[$problem] = $time;
-               $this->total++;
+               $this->total += $this->contest->pscores[$problem];
                $this->penalty += $this->attime[$problem] + $this->booboo[$problem] * 20;
                break;
             // default - assume it's wrong
@@ -318,7 +337,7 @@
          {
             $stat = $this->attime[$problem];
             if (array_key_exists($problem, $this->booboo))
-               $stat = $stat . "+" . ($this->booboo[$problem] * 20);
+               $stat = $stat . "+" . ($this->booboo[$problem] * 4);
          }
          else if (array_key_exists($problem, $this->booboo))
          {

@@ -65,7 +65,7 @@
                if (in_array($team, $g_official))
                   $teamname = "<b><i>".$teamname."</i></b>";
                
-               $scores[$team] = new TeamScore($teamname, $team);
+               $scores[$team] = new TeamScore($teamname, $team, $contest);
             }
             
             $scores[$team]->report($prob, $time, $verdict);
@@ -132,7 +132,8 @@
                print "<td align=\"center\">$stat</td>";
             }
             print "<td align=\"center\">$ts->total</td>";
-            print "<td align=\"center\">$ts->penalty</td>";
+            $gcj_penalty = $ts->gcj_penalty();
+            print "<td align=\"center\">$gcj_penalty</td>";
             print "</tr>\n";      
          }
       }

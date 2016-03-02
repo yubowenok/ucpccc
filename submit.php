@@ -64,7 +64,8 @@ END;
       foreach ($contest->pnames as $name)
       {
          $letter = $name{0};
-         print "<option value=\"$letter\">$name</option>";
+         $score = $contest->pscores[$letter];
+         print "<option value=\"$letter\">$name ($score)</option>";
       }
       $nlanguages = count($g_extension);
 // ----- HTML -----
@@ -131,8 +132,14 @@ END;
    
    print "<p><b><big>Runs received from team $team</big></b></p>\n";
 
-   print "<table border=\"1\" width=\"480\" cellspacing=\"0\">\n";
-   print "<tr bgcolor=\"#EEEEEE\"><th>Time</th><th>Problem</th><th>Language</th><th>Verdict</th></tr>\n";            
+   print "<table border=\"1\" width=\"600\" cellspacing=\"0\">\n";
+   print "<tr bgcolor=\"#EEEEEE\">";
+   print "<th>Time</th>";
+   print "<th>Problem</th>";
+   print "<th>Points</th>";
+   print "<th>Language</th>";
+   print "<th>Verdict</th>";
+   print "</tr>\n";            
 
    foreach ($runs as $run)
    {
@@ -140,12 +147,18 @@ END;
                      $g_verdicts[$run->verdict] : "Unknown";
       if ($run->verdict == "E") 
          $verdict = $verdict . " <i>(Please contact judge!)</i>";
+
+      $score = $contest->pscores[$run->problem];
       
       // colour code the results
       if ($run->verdict == "U")        print "<tr>";
       else if ($run->verdict == "A")   print "<tr bgcolor=\"#CCFFCC\">";
       else                             print "<tr bgcolor=\"#FFCCCC\">";      
-      print "<td>$run->time</td><td>$run->problem</td><td>$run->language</td><td>$verdict</td></tr>\n";
+      print "<td>$run->time</td>";
+      print "<td>$run->problem</td>";
+      print "<td>$score</td>";
+      print "<td>$run->language</td>";
+      print "<td>$verdict</td></tr>\n";
    }
    print "</table><br>\n";
 
