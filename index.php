@@ -71,7 +71,7 @@
    }
 ?>
 <p>Current date and time:<br>
-<i><?=date("r")?></i></p>
+<i><?php print date("r") ?></i></p>
 </div>
 
 <?php footer(); ?>
