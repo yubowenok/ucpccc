@@ -157,7 +157,7 @@ END;
       print "<td>$run->time</td>";
       print "<td>$run->problem</td>";
       print "<td>$score</td>";
-      print "<td>$run->language</td>";
+      print "<td><a href='source.php?file=".$run->file."'>$run->language</a></td>";
       print "<td>$verdict</td></tr>\n";
    }
    print "</table><br>\n";

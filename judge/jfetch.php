@@ -9,8 +9,9 @@
 //      header("Content-type: application/force-download");
 //      header("Content-Transfer-Encoding: Binary");
       header("Content-type: text/plain");
+      echo file_get_contents($name);
 //      header("Content-length: ".filesize($file));
-      header("Content-disposition: attachment; filename=\"".$name."\"");
+//      header("Content-disposition: attachment; filename=\"".$name."\"");
       
       readfile($_GET["file"]);
    }
