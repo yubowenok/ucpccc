@@ -2,7 +2,7 @@
 
 # set up permissions for files and directories
 chmod 771 ..
-chmod 664 ../*.php
+chmod 644 ../*.php
 chmod 2777 ../problems
 chmod 664 ../problems/*
 chmod 666 ../problems/.htaccess

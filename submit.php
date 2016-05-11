@@ -145,7 +145,11 @@ END;
       if ($run->verdict == "U")        print "<tr>";
       else if ($run->verdict == "A")   print "<tr bgcolor=\"#CCFFCC\">";
       else                             print "<tr bgcolor=\"#FFCCCC\">";      
-      print "<td>$run->time</td><td>$run->problem</td><td>$run->language</td><td>$verdict</td></tr>\n";
+      print "<td>$run->time</td>";
+      print "<td>$run->problem</td>";
+      print "<td>$score</td>";
+      print "<td><a href='source.php?file=".$run->file."'>$run->language</a></td>";
+      print "<td>$verdict</td></tr>\n";
    }
    print "</table><br>\n";
 
