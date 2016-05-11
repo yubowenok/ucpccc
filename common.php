@@ -349,7 +349,7 @@
       
       function key()
       {
-         return sprintf("%02d%05d%s", 99 - $this->total, $this->penalty, $this->name);
+         return sprintf("%03d%05d%s", 999 - $this->total, $this->penalty, $this->name);
       }
    }
 
