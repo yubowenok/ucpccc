@@ -43,7 +43,7 @@
       print "<p>Contest of $contest->cdate<br>\n";
       print "<i>$contest->ctime</i></p>\n";
 
-      print "<table border=\"0\" width=\"320\">\n";
+      print "<table border=\"0\" width=\"360\">\n";
       print "<tr><th>$contest->cname</th></tr>\n";
       
       foreach ($contest->pletters as $letter)

@@ -164,11 +164,7 @@
    }
 ?>
 <p>Current date and time:<br>
-<<<<<<< HEAD
 <i><?php print date("r")?></i></p>
-=======
-<i><?php print date("r"); ?></i></p>
->>>>>>> bowen
 </div>
 
 <?php footer(); ?>
