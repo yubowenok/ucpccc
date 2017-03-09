@@ -188,7 +188,7 @@ END;
          }
          print "         </select>\n";
          print "         <select name=\"cdyear\">\n";
-         for ($i = 2010; $i <= 2013; $i++) {
+         for ($i = 2017; $i <= 2020; $i++) {
             $sel = ($i == $cdyear) ? "selected=\"selected\"" : "";         
             print "            <option value=\"$i\" $sel>$i</option>\n";
          }
