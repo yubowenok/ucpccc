@@ -320,7 +320,7 @@
                $this->solved[] = $problem;
                $this->attime[$problem] = $time;
                $this->total += $this->contest->pscores[$problem];
-               $this->penalty += $this->attime[$problem] + $this->booboo[$problem] * 20;
+               $this->penalty = $this->gcd_penalty();
                break;
             // default - assume it's wrong
             default:
@@ -349,7 +349,7 @@
       
       function key()
       {
-         return sprintf("%03d%05d%s", 999 - $this->total, $this->penalty, $this->name);
+        return sprintf("%03d%05d%s", 999 - $this->total, $this->penalty, $this->name);
       }
    }
 
