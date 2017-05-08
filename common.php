@@ -320,7 +320,7 @@
                $this->solved[] = $problem;
                $this->attime[$problem] = $time;
                $this->total += $this->contest->pscores[$problem];
-               $this->penalty = $this->gcd_penalty();
+               $this->penalty = $this->gcj_penalty();
                break;
             // default - assume it's wrong
             default:
